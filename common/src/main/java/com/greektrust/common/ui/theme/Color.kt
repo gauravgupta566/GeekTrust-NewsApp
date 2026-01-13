@@ -1,4 +1,4 @@
-package com.greektrust.core.ui.theme
+package com.greektrust.common.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

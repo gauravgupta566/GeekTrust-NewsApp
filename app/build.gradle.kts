@@ -46,6 +46,8 @@ dependencies {
     implementation(project(":presentation"))
     implementation(project(":core"))
     implementation(project(":domain"))
+    implementation(project(":common"))
+
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -59,6 +61,8 @@ dependencies {
     implementation(libs.hilt.android)
 
     ksp(libs.hilt.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

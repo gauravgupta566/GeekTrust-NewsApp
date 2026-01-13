@@ -1,4 +1,4 @@
-package com.greektrust.core.ui.theme
+package com.greektrust.common.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
