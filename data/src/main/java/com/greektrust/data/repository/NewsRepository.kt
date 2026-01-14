@@ -8,6 +8,10 @@ import kotlinx.coroutines.flow.Flow
 
 interface NewsRepository {
 
-   suspend fun getsNewsFeed(): Flow<APIResult<List<Article>>>
+    fun getsNewsFeed(): Flow<APIResult<List<Article>>>
+
+
+    fun getsSearchNews(query:String): Flow<APIResult<List<Article>>>
+
 
 }

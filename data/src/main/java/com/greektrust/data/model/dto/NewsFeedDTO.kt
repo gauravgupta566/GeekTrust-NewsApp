@@ -1,44 +1,54 @@
 package com.greektrust.data.model.dto
 
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-@Serializable
+@JsonClass(generateAdapter = true)
 data class NewsFeedDTO(
-    @SerialName("articles")
-    val articles: List<Article>,
-    @SerialName("status")
+    @Json(name = "status")
     val status: String,
-    @SerialName("totalResults")
-    val totalResults: Int
-)
 
-@Serializable
+    @Json(name = "totalResults")
+    val totalResults: Int,
+
+    @Json(name = "articles")
+    val articles: List<Article> = emptyList()
+)
+@JsonClass(generateAdapter = true)
 data class Article(
-    @SerialName("author")
-    val author: String,
-    @SerialName("content")
-    val content: String,
-    @SerialName("description")
-    val description: String,
-    @SerialName("publishedAt")
-    val publishedAt: String,
-    @SerialName("source")
+    @Json(name = "source")
     val source: Source,
-    @SerialName("title")
+
+    @Json(name = "author")
+    val author: String? = null,
+
+    @Json(name = "title")
     val title: String,
-    @SerialName("url")
+
+    @Json(name = "description")
+    val description: String? = null,
+
+    @Json(name = "url")
     val url: String,
-    @SerialName("urlToImage")
-    val urlToImage: String
+
+    @Json(name = "urlToImage")
+    val urlToImage: String? = null,
+
+    @Json(name = "publishedAt")
+    val publishedAt: String,
+
+    @Json(name = "content")
+    val content: String? = null
 )
 
 
-@Serializable
+
+@JsonClass(generateAdapter = true)
 data class Source(
-    @SerialName("id")
-    val id: String,
-    @SerialName("name")
+    @Json(name = "id")
+    val id: String? = null,
+
+    @Json(name = "name")
     val name: String
 )

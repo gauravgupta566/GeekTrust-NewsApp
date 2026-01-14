@@ -7,7 +7,13 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -22,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.greektrust.common.ui.TopBar
 import com.greektrust.common.ui.theme.NewsAppGreekTrustTheme
+import com.greektrust.common.ui.utils.OpenInBrowserIcon
 import com.greektrust.news.navigation.NewsNavHost
 import com.greektrust.presentation.feed.NewsFeedScreen
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,19 +40,21 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-
         setContent {
             var title by remember { mutableStateOf("News feed") }
 
             NewsAppGreekTrustTheme {
                 Scaffold(
-                    topBar = { TopAppBar(title = { Text(text = title) }) }
-                ) { paddingValues ->
+                    topBar = {
+                        TopAppBar(title = { Text(text = title) })
+                    },
+
+                    ) { paddingValues ->
                     NewsNavHost(
                         Modifier
                             .padding(paddingValues)
                             .systemBarsPadding(),
-                        heading = {newTitle -> title = newTitle}
+                        heading = { newTitle -> title = newTitle }
                     )
                 }
             }

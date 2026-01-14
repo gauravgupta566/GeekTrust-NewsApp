@@ -20,6 +20,13 @@ class NewsFeedViewModel @Inject constructor(private val repository: NewsReposito
     val newFeed: StateFlow<APIResult<List<Article>>> = _newsFeed
 
     fun getNewsFeed(){
+        viewModelScope.launch {
+            _newsFeed.value = APIResult.Loading
+            repository.getsNewsFeed().collect {it->
+                _newsFeed.value = it
+
+            }
+        }
 
     }
 }

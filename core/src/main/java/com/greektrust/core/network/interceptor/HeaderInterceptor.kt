@@ -9,7 +9,11 @@ class HeaderInterceptor(val apiKey: String) : Interceptor {
         val newRequest =
             chain.request()
                 .newBuilder()
-                .addHeader(NetworkConstants.API_KEY, apiKey).build()
+                .addHeader(
+                    "User-Agent",
+                    "Android"
+                ).build()
+
 
         return chain.proceed(newRequest)
     }

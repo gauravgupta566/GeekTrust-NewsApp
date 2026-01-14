@@ -19,6 +19,9 @@ retrofit = "2.9.0"
 retrofit2KotlinxSerializationConverter = "0.8.0"
 roomRuntime = "2.6.1"
 serialization = "1.6.20"
+coil = "2.6.0"
+tab = "1.8.0"
+
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -46,6 +49,8 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+coil = { module = "io.coil-kt:coil-compose", version.ref= "coil" }
+custom-tab = { module ="androidx.browser:browser" , version.ref ="tab"}
 retrofit2-kotlinx-serialization-converter = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "retrofit2KotlinxSerializationConverter" }
 
 [plugins]

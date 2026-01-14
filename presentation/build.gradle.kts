@@ -43,6 +43,7 @@ android {
 dependencies {
     implementation(project(":data"))
     implementation(project(":core"))
+    implementation(project(":common"))
 
 
 
@@ -58,6 +59,9 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.coil)
+    implementation(libs.custom.tab)
+
 
 
     testImplementation(libs.junit)

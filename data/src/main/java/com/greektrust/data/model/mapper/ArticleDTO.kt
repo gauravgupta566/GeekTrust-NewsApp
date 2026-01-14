@@ -1,6 +1,8 @@
 package com.greektrust.data.model.mapper
 
+import com.greektrust.data.datasource.local.BookmarkedArticleEntity
 import com.greektrust.data.model.dto.Article
+import com.greektrust.data.model.dto.Source
 
 
 fun Article.toDomain(): Article{
@@ -14,14 +16,33 @@ fun Article.toDomain(): Article{
         url = url,
         urlToImage = urlToImage
     )
-    
 }
 
-//fun ArticleDto.toDomain(): Article {
-//    return Article(
-//        title = title.orEmpty(),
-//        description = description.orEmpty(),
-//        imageUrl = urlToImage.orEmpty(),
-//        articleUrl = url.orEmpty()
-//    )
-//}
+
+fun Article.toBookmarkedEntity(): BookmarkedArticleEntity {
+    return BookmarkedArticleEntity(
+        url = url,              // PrimaryKey
+        title = title,
+        description = description ?: "",
+        imageUrl = urlToImage ?: "",
+        sourceName = source.name,
+        publishedAt = publishedAt,
+        bookmarkedAt = System.currentTimeMillis()
+    )
+}
+
+fun BookmarkedArticleEntity.toArticle(): Article {
+    return Article(
+        source = Source(
+            id = null,
+            name = sourceName
+        ),
+        author = "",
+        title = title,
+        description = description,
+        url = url,
+        urlToImage = imageUrl,
+        publishedAt = publishedAt,
+        content = ""
+    )
+}
