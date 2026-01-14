@@ -15,30 +15,27 @@ import com.greektrust.presentation.search.SearchNavGraph
 import com.greektrust.presentation.search.SearchScreen
 
 @Composable
-fun NewsNavHost() {
+fun NewsNavHost(modifier: Modifier, heading: (String) -> Unit) {
 
     val navController = rememberNavController()
 
-    NavHost(navController, NewsFeedNavGraph.List.route) {
+    NavHost(navController, NewsFeedNavGraph.List.route, modifier = modifier) {
 
-        println("hello ${NewsFeedNavGraph.List.route}")
-
-        composable(NewsFeedNavGraph.List.route){
-           NewsFeedScreen()
+        composable(NewsFeedNavGraph.List.route) {
+            NewsFeedScreen(heading)
         }
 
-        composable(DetailsNavGraph.Details.route){
+        composable(DetailsNavGraph.Details.route) {
             DetailsScreen()
         }
 
-        composable(BookmarkNavGraph.Bookmark.route){
+        composable(BookmarkNavGraph.Bookmark.route) {
             BookMarkScreen()
         }
 
-        composable(SearchNavGraph.Search.route){
+        composable(SearchNavGraph.Search.route) {
             SearchScreen()
         }
-
     }
 
 }

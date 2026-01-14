@@ -1,8 +1,12 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.serialization)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.dagger.hilt)
 
 
 
@@ -12,11 +16,21 @@ android {
     namespace = "com.greektrust.core"
     compileSdk = 36
 
+    val localProperties = Properties()
+    localProperties.load(FileInputStream(rootProject.file("local.properties")))
+
+    val apiKey: String = localProperties["API_KEY"] as String
+
+
+
     defaultConfig {
         minSdk = 24
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+
+        buildConfigField("String", "API_KEY", "\"$apiKey\"")
+
     }
 
     buildTypes {
@@ -36,6 +50,10 @@ android {
         jvmTarget = "11"
     }
 
+    buildFeatures {
+        buildConfig = true
+    }
+
 }
 
 dependencies {
@@ -46,6 +64,11 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.retrofit2.kotlinx.serialization.converter)
+    implementation(libs.okhttp)
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+
+
 
 // Optional but highly recommended
 
