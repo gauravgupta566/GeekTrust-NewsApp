@@ -1,9 +1,14 @@
 package com.greektrust.data.datasource.remote
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.greektrust.core.network.APIError
 import com.greektrust.core.network.APIResult
 import com.greektrust.data.model.dto.Article
+import com.greektrust.data.model.dto.NewsFeedDTO
 import com.greektrust.data.model.mapper.toDomain
+import kotlinx.coroutines.flow.Flow
 import java.io.IOException
 import javax.inject.Inject
 
@@ -37,9 +42,12 @@ class NewsRemoteDataSource @Inject constructor(private val newsApiService: NewsA
 
     }
 
-    suspend fun fetchNewsData(): APIResult<List<Article>> {
+
+
+
+    suspend fun fetchNewsData(page: Int, pageSize: Int): APIResult<List<Article>> {
         return try {
-            val response = newsApiService.getNewsFeed("us")
+            val response = newsApiService.getNewsFeed(country = "us",page=page, pageSize = pageSize)
             if (response.isSuccessful) {
                 val result = response.body()
                 APIResult.Success(result!!.articles.map { it.toDomain() })

@@ -10,10 +10,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,15 +24,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import com.greektrust.common.ui.utils.AppBarState
 import com.greektrust.common.ui.utils.AppError
 import com.greektrust.common.ui.utils.AppLoader
 import com.greektrust.common.ui.utils.formatDate
 import com.greektrust.core.network.APIError
 import com.greektrust.core.network.APIResult
 import com.greektrust.data.model.dto.Article
-import com.greektrust.presentation.bookmark.BookMarkViewModel
-import com.greektrust.presentation.search.SearchNavGraph
 
 @Composable
 fun NewsFeedScreen(
@@ -44,12 +40,15 @@ fun NewsFeedScreen(
     val result = newsFeedViewModel.newFeed.collectAsState()
 
     LaunchedEffect(Unit) {
-        newsFeedViewModel.getNewsFeed()
+        newsFeedViewModel.loadFirstPage()
     }
 
     when (result.value) {
         APIResult.Loading -> {
-            AppLoader()
+            if (newsFeedViewModel.getCurrentPageNo() <= 1) {
+                AppLoader()
+            }
+
         }
 
         is APIResult.Success -> {
@@ -57,7 +56,9 @@ fun NewsFeedScreen(
             if (articles.isEmpty()) {
                 AppError("No news available")
             } else {
-                NewsFeedContent(articles, onArticleClick)
+                NewsFeedContent(articles = articles, onArticleClick = onArticleClick, onLoadMore = {
+                    newsFeedViewModel.loadNextPage()
+                })
             }
         }
 
@@ -69,14 +70,37 @@ fun NewsFeedScreen(
 
 }
 
+
 @Composable
-fun NewsFeedContent(articles: List<Article>, onArticleClick: (Article) -> Unit) {
+fun NewsList(
+    articles: List<Article>,
+    onLoadMore: () -> Unit,
+    onArticleClick: (Article) -> Unit
+) {
     LazyColumn(modifier = Modifier.fillMaxSize()) {
-        items(items = articles, key = { articles -> articles.url }) { feed ->
+        itemsIndexed(items = articles, key = { _, articles -> articles.url }) { index, article ->
+            if (index >= articles.size - 3) {
+                onLoadMore()
+            }
+            NewsItem(article = article, onClick = { onArticleClick(article) })
+        }
+    }
+}
+
+@Composable
+fun NewsFeedContent(
+    articles: List<Article>,
+    onArticleClick: (Article) -> Unit,
+    onLoadMore: () -> Unit
+) {
+    LazyColumn(modifier = Modifier.fillMaxSize()) {
+        itemsIndexed(items = articles, key = { _, articles -> articles.url }) { index, feed ->
+            if (index >= articles.size - 3) {
+                onLoadMore()
+            }
             NewsItem(feed, onClick = { onArticleClick(feed) })
         }
     }
-
 }
 
 @Composable

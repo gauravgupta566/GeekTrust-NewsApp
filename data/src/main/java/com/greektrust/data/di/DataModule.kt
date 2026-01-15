@@ -32,4 +32,7 @@ object DataModule {
         remoteDataSource: NewsRemoteDataSource
     ): NewsRepository =
         NewsRepositoryImpl(remoteDataSource)
+
+
+
 }

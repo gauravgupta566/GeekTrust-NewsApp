@@ -43,7 +43,6 @@ import com.greektrust.common.ui.utils.formatDate
 import com.greektrust.core.network.APIError
 import com.greektrust.core.network.APIResult
 import com.greektrust.data.model.dto.Article
-import com.greektrust.presentation.feed.NewsFeedContent
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

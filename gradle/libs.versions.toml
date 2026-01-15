@@ -21,6 +21,9 @@ roomRuntime = "2.6.1"
 serialization = "1.6.20"
 coil = "2.6.0"
 tab = "1.8.0"
+moshi = "1.15.1"
+paging = "3.3.2"
+
 
 
 [libraries]
@@ -51,7 +54,16 @@ okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 coil = { module = "io.coil-kt:coil-compose", version.ref= "coil" }
 custom-tab = { module ="androidx.browser:browser" , version.ref ="tab"}
+moshi = { group = "com.squareup.moshi", name = "moshi", version.ref = "moshi" }
+moshi-kotlin = { group = "com.squareup.moshi", name = "moshi-kotlin", version.ref = "moshi" }
+moshi-codegen = { group = "com.squareup.moshi", name = "moshi-kotlin-codegen", version.ref = "moshi" }
+retrofit-converter-moshi = {  group = "com.squareup.retrofit2", name = "converter-moshi", version.ref = "retrofit" }
 retrofit2-kotlinx-serialization-converter = { module = "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter", version.ref = "retrofit2KotlinxSerializationConverter" }
+paging-runtime = { group = "androidx.paging", name = "paging-runtime", version.ref = "paging" }
+paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging" }
+
+
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

@@ -67,17 +67,15 @@ dependencies {
     implementation(libs.okhttp)
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
-    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
 
 
-    implementation("com.squareup.moshi:moshi:1.15.1")
-    implementation("com.squareup.moshi:moshi-kotlin:1.15.1")
+    implementation(libs.moshi)
+    implementation(libs.moshi.kotlin)
 
-    // Retrofit converter
-    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
+    implementation(libs.retrofit.converter.moshi)
 
-    // Moshi KSP codegen (IMPORTANT)
-    ksp("com.squareup.moshi:moshi-kotlin-codegen:1.15.1")
+    // IMPORTANT: Moshi codegen with KSP
+    ksp(libs.moshi.codegen)
 
 
 // Optional but highly recommended

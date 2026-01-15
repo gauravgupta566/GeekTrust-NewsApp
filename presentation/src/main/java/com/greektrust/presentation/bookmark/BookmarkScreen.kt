@@ -38,7 +38,8 @@ fun BookMarkScreen(
     } else {
         NewsFeedContent(
             articles = bookmarks,
-            onArticleClick = onArticleClick
+            onArticleClick = onArticleClick,
+            onLoadMore = { }
         )
     }
 }

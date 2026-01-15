@@ -61,6 +61,9 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.coil)
     implementation(libs.custom.tab)
+    implementation(libs.paging.runtime)
+    implementation(libs.paging.compose)
+
 
 
 

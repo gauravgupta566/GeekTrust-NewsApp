@@ -4,6 +4,7 @@ import com.greektrust.data.repository.BookmarkRepository
 import com.greektrust.data.repository.BookmarkRepositoryImpl
 import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
@@ -15,4 +16,5 @@ abstract class RepositoryModule {
     abstract fun bindBookmarkRepository(
         impl: BookmarkRepositoryImpl
     ): BookmarkRepository
+
 }

@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.greektrust.data.datasource.local.NewsDatabase
 import com.greektrust.data.datasource.local.dao.BookmarkDao
+import com.greektrust.data.repository.BookmarkRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,6 +30,7 @@ object DatabaseModule {
     @Provides
     fun provideBookmarkDao(db: NewsDatabase): BookmarkDao =
         db.bookmarkDao()
+
 
 
 }

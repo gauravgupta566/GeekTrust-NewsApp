@@ -41,6 +41,7 @@ android {
 dependencies {
     implementation(project(":core"))
 
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -48,22 +49,22 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.retrofit2.kotlinx.serialization.converter)
     implementation(libs.okhttp)
-    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
 
+    implementation(libs.moshi)
+    implementation(libs.moshi.kotlin)
 
-    implementation("com.squareup.moshi:moshi:1.15.1")
-    implementation("com.squareup.moshi:moshi-kotlin:1.15.1")
+    implementation(libs.retrofit.converter.moshi)
 
-    // Retrofit converter
-    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
-
-    // Moshi KSP codegen (IMPORTANT)
-    ksp("com.squareup.moshi:moshi-kotlin-codegen:1.15.1")
-
+    // IMPORTANT: Moshi codegen with KSP
+    ksp(libs.moshi.codegen)
 
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
+
+    implementation(libs.paging.runtime)
+    implementation(libs.paging.compose)
+
 
 
     implementation(libs.hilt.android)
