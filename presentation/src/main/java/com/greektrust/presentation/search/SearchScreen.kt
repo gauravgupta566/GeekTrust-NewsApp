@@ -29,6 +29,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
+import com.greektrust.common.ui.utils.AppBarState
 import com.greektrust.common.ui.utils.AppError
 import com.greektrust.common.ui.utils.AppLoader
 import com.greektrust.common.ui.utils.formatDate
@@ -38,13 +39,13 @@ import com.greektrust.data.model.dto.Article
 import com.greektrust.presentation.feed.NewsFeedContent
 
 @Composable
-fun SearchScreen(heading: (String) -> Unit, viewModel: SearchViewModel = hiltViewModel()) {
+fun SearchScreen(appBarState: (AppBarState) -> Unit, viewModel: SearchViewModel = hiltViewModel()) {
     var query by remember { mutableStateOf("") }
 
     val result by viewModel.data.collectAsState()
 
     LaunchedEffect(Unit) {
-        heading("Search")
+        appBarState(AppBarState.Search(title = "Search" ))
     }
 
     Column(

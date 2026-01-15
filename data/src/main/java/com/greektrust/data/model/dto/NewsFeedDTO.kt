@@ -1,8 +1,10 @@
 package com.greektrust.data.model.dto
 
 
+import android.os.Parcelable
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import kotlinx.parcelize.Parcelize
 
 @JsonClass(generateAdapter = true)
 data class NewsFeedDTO(
@@ -15,6 +17,9 @@ data class NewsFeedDTO(
     @Json(name = "articles")
     val articles: List<Article> = emptyList()
 )
+
+
+@Parcelize
 @JsonClass(generateAdapter = true)
 data class Article(
     @Json(name = "source")
@@ -40,10 +45,10 @@ data class Article(
 
     @Json(name = "content")
     val content: String? = null
-)
+) : Parcelable
 
 
-
+@Parcelize
 @JsonClass(generateAdapter = true)
 data class Source(
     @Json(name = "id")
@@ -51,4 +56,4 @@ data class Source(
 
     @Json(name = "name")
     val name: String
-)
+) : Parcelable

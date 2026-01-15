@@ -25,24 +25,31 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
+import com.greektrust.common.ui.utils.AppBarState
 import com.greektrust.common.ui.utils.AppError
 import com.greektrust.common.ui.utils.AppLoader
 import com.greektrust.common.ui.utils.formatDate
 import com.greektrust.core.network.APIError
 import com.greektrust.core.network.APIResult
 import com.greektrust.data.model.dto.Article
+import com.greektrust.presentation.search.SearchNavGraph
 
 @Composable
 fun NewsFeedScreen(
-    heading: (String) -> Unit,
+    appBarState: (AppBarState) -> Unit,
     onArticleClick: (String) -> Unit,
+    onSearchClick: (String) -> Unit,
     newsFeedViewModel: NewsFeedViewModel = hiltViewModel()
 ) {
 
     val result = newsFeedViewModel.newFeed.collectAsState()
 
     LaunchedEffect(Unit) {
-        heading("News feed")
+        appBarState(AppBarState.NewsFeed(title = "News Feed", onSearchClick = {
+            onSearchClick(
+                SearchNavGraph.Search.route
+            )
+        }))
         newsFeedViewModel.getNewsFeed()
     }
 
