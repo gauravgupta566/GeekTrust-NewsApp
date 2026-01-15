@@ -32,6 +32,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -43,6 +44,7 @@ import com.greektrust.common.ui.utils.formatDate
 import com.greektrust.core.network.APIError
 import com.greektrust.core.network.APIResult
 import com.greektrust.data.model.dto.Article
+import com.greektrust.presentation.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -54,7 +56,7 @@ fun SearchScreen(viewModel: SearchViewModel = hiltViewModel()) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Search News Feed") },
+                title = { Text(stringResource(R.string.search_news_feed)) },
             )
         }
 
@@ -72,7 +74,7 @@ fun SearchScreen(viewModel: SearchViewModel = hiltViewModel()) {
                     viewModel.onQueryChange(it)
                 },
                 modifier = Modifier.fillMaxWidth(),
-                placeholder = { Text("Search articles") },
+                placeholder = { Text(stringResource(R.string.search_articles)) },
                 singleLine = true
             )
 
@@ -89,7 +91,7 @@ fun SearchScreen(viewModel: SearchViewModel = hiltViewModel()) {
 
                     val articles = (result as APIResult.Success).data
                     if (articles.isEmpty()) {
-                        AppError("No news available")
+                        AppError(stringResource(R.string.no_news_available))
                     } else {
                         SearchItemList(articles)
                     }

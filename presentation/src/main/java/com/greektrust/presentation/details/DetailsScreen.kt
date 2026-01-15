@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Share
-import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -19,6 +18,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
@@ -28,6 +28,7 @@ import com.greektrust.common.ui.utils.BookmarkedIcon
 import com.greektrust.common.ui.utils.NotBookmarkedIcon
 import com.greektrust.common.ui.utils.OpenInBrowserIcon
 import com.greektrust.data.model.dto.Article
+import com.greektrust.presentation.R
 import com.greektrust.presentation.bookmark.BookMarkViewModel
 import com.greektrust.presentation.bookmark.BookmarkEvent
 
@@ -53,10 +54,10 @@ fun DetailsScreen(
             bookMarkViewModel.bookmarkEvent.collect { event ->
                 when (event) {
                     BookmarkEvent.Added ->
-                        context.showToast("Article bookmarked")
+                        context.showToast(context.getString(R.string.article_bookmarked))
 
                     BookmarkEvent.Removed ->
-                        context.showToast("Bookmark removed")
+                        context.showToast(context.getString(R.string.bookmark_removed))
                 }
             }
         }
@@ -65,15 +66,15 @@ fun DetailsScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Article Details") },
+                title = { Text(stringResource(R.string.article_details)) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.Default.ArrowBack, contentDescription = stringResource(R.string.back))
                     }
                 },
                 actions = {
                     IconButton(onClick = onShare) {
-                        Icon(Icons.Default.Share, contentDescription = "Share")
+                        Icon(Icons.Default.Share, contentDescription = stringResource(R.string.share))
                     }
                     IconButton(onClick = { bookMarkViewModel.toggleBookmark(article) }) {
                         Icon(
@@ -81,13 +82,13 @@ fun DetailsScreen(
                                 BookmarkedIcon
                             } else {
                                 NotBookmarkedIcon
-                            }, contentDescription = "Bookmark"
+                            }, contentDescription = stringResource(R.string.bookmark)
                         )
                     }
                     IconButton(onClick = onOpenInBrowser) {
                         Icon(
                             imageVector = OpenInBrowserIcon,
-                            contentDescription = "Open in browser"
+                            contentDescription = stringResource(R.string.open_in_browser)
                         )
                     }
                 }

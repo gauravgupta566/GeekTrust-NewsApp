@@ -8,9 +8,7 @@ import com.greektrust.data.repository.NewsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
-import org.jetbrains.annotations.ApiStatus
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,7 +17,6 @@ class NewsFeedViewModel @Inject constructor(private val repository: NewsReposito
     private val _newsFeed = MutableStateFlow<APIResult<List<Article>>>(APIResult.Loading)
     val newFeed: StateFlow<APIResult<List<Article>>> = _newsFeed
 
-    private val pageNo = 1
     private val pageSize = 15
 
     private var currentPage = 1
@@ -44,10 +41,6 @@ class NewsFeedViewModel @Inject constructor(private val repository: NewsReposito
     }
 
     private fun loadPage() {
-        println("hello current page $currentPage")
-        println("hello current page size $pageSize")
-        println()
-
         viewModelScope.launch {
             isLoading = true
             if(accumulatedArticles.isEmpty()){
@@ -83,16 +76,5 @@ class NewsFeedViewModel @Inject constructor(private val repository: NewsReposito
                 isLoading = false
             }
         }
-    }
-
-    fun getNewsFeed() {
-        viewModelScope.launch {
-            _newsFeed.value = APIResult.Loading
-            repository.getsNewsFeed(pageNo, pageSize).collect { it ->
-                _newsFeed.value = it
-
-            }
-        }
-
     }
 }

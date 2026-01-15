@@ -10,7 +10,7 @@ interface NewsApiService {
     @GET("v2/top-headlines")
     suspend fun getNewsFeed(
         @Query("country") country : String = "us",
-        @Query("apiKey") apiKey : String ="e6dc23dbf38a46e289f5c52542ad9dac",
+        @Query("apiKey") apiKey : String ,
         @Query("page") page: Int,
         @Query("pageSize") pageSize: Int
     ): Response<NewsFeedDTO>
@@ -19,7 +19,7 @@ interface NewsApiService {
     @GET("v2/everything")
     suspend fun getSearchNews(
         @Query("q") q : String ,
-        @Query("apiKey") apiKey : String ="e6dc23dbf38a46e289f5c52542ad9dac"
+        @Query("apiKey") apiKey : String
     ): Response<NewsFeedDTO>
 
 

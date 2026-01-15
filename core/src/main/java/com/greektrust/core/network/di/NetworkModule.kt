@@ -21,7 +21,6 @@ import javax.inject.Singleton
 object NetworkModule {
 
    const val BASE_URL = "https://newsapi.org/"
-   const val API_KEY = "e6dc23dbf38a46e289f5c52542ad9dac"
 
         @Provides
         @Singleton
@@ -35,7 +34,7 @@ object NetworkModule {
         return OkHttpClient.Builder()
             .connectTimeout(NetworkConstants.TIMEOUT, TimeUnit.SECONDS)
             .addInterceptor(LoggingInterceptor())
-            .addInterceptor(HeaderInterceptor(API_KEY))
+            .addInterceptor(HeaderInterceptor())
             .addInterceptor(RetryInterceptor())
             .build()
 

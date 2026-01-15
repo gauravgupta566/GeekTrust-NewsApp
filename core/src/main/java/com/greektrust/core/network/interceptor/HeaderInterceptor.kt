@@ -4,7 +4,7 @@ import com.greektrust.core.network.NetworkConstants
 import okhttp3.Interceptor
 import okhttp3.Response
 
-class HeaderInterceptor(val apiKey: String) : Interceptor {
+class HeaderInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val newRequest =
             chain.request()

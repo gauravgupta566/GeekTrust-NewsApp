@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -21,6 +22,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.greektrust.common.ui.utils.AppBarState
 import com.greektrust.data.model.dto.Article
+import com.greektrust.presentation.R
 import com.greektrust.presentation.bookmark.BookMarkScreen
 import com.greektrust.presentation.bookmark.BookMarkViewModel
 import com.greektrust.presentation.feed.NewsFeedScreen
@@ -48,7 +50,7 @@ fun HomeScreen(
             when (currentRoute) {
                 BottomNavItem.News.route -> {
                     TopAppBar(
-                        title = { Text("News Feed") },
+                        title = { Text(stringResource(R.string.news_feed)) },
                         actions = {
                             IconButton(
                                 onClick = {
@@ -63,7 +65,7 @@ fun HomeScreen(
 
                 BottomNavItem.Bookmark.route -> {
                     TopAppBar(
-                        title = { Text("Bookmarks") }
+                        title = { Text(stringResource(R.string.bookmarks)) }
                     )
                 }
 

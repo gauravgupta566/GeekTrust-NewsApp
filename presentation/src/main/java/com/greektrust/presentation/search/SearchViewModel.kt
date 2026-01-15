@@ -14,7 +14,6 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -50,6 +49,4 @@ class SearchViewModel @Inject constructor(private val newsRepository: NewsReposi
             }
             .launchIn(viewModelScope)
     }
-
-
 }
