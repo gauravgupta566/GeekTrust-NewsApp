@@ -11,11 +11,18 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -38,59 +45,64 @@ import com.greektrust.core.network.APIResult
 import com.greektrust.data.model.dto.Article
 import com.greektrust.presentation.feed.NewsFeedContent
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchScreen(appBarState: (AppBarState) -> Unit, viewModel: SearchViewModel = hiltViewModel()) {
+fun SearchScreen(viewModel: SearchViewModel = hiltViewModel()) {
     var query by remember { mutableStateOf("") }
 
     val result by viewModel.data.collectAsState()
 
-    LaunchedEffect(Unit) {
-        appBarState(AppBarState.Search(title = "Search" ))
-    }
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Search News Feed") },
+            )
+        }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(12.dp)
-    ) {
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        ) {
+            // 🔍 Search Input
+            OutlinedTextField(
+                value = query,
+                onValueChange = {
+                    query = it
+                    viewModel.onQueryChange(it)
+                },
+                modifier = Modifier.fillMaxWidth(),
+                placeholder = { Text("Search articles") },
+                singleLine = true
+            )
 
-        // 🔍 Search Input
-        OutlinedTextField(
-            value = query,
-            onValueChange = {
-                query = it
-                viewModel.onQueryChange(it)
-            },
-            modifier = Modifier.fillMaxWidth(),
-            placeholder = { Text("Search articles") },
-            singleLine = true
-        )
+            Spacer(modifier = Modifier.height(12.dp))
 
-        Spacer(modifier = Modifier.height(12.dp))
-
-        // 📊 Result State
-        when (result) {
-            APIResult.Loading -> {
-                if (query.isNotEmpty() && query.length > 2)
-                    AppLoader()
-            }
-
-            is APIResult.Success -> {
-
-                val articles = (result as APIResult.Success).data
-                if (articles.isEmpty()) {
-                    AppError("No news available")
-                } else {
-                    SearchItemList(articles)
+            // 📊 Result State
+            when (result) {
+                APIResult.Loading -> {
+                    if (query.isNotEmpty() && query.length > 2)
+                        AppLoader()
                 }
+
+                is APIResult.Success -> {
+
+                    val articles = (result as APIResult.Success).data
+                    if (articles.isEmpty()) {
+                        AppError("No news available")
+                    } else {
+                        SearchItemList(articles)
+                    }
+                }
+
+                else -> {
+                    val apiError: APIError = (result as APIResult.Error<*>).error as APIError
+                    AppError(apiError.error)
+                }
+
+
             }
-
-            else -> {
-                val apiError: APIError = (result as APIResult.Error<*>).error as APIError
-                AppError(apiError.error)
-            }
-
-
         }
     }
 }

@@ -60,3 +60,67 @@ val OpenInBrowserIcon: ImageVector
 
         }.build()
     }
+
+
+val BookmarkedIcon: ImageVector
+    get() {
+        return ImageVector.Builder(
+            name = "Bookmarked",
+            defaultWidth = 24.dp,
+            defaultHeight = 24.dp,
+            viewportWidth = 24f,
+            viewportHeight = 24f
+        ).apply {
+
+            path(
+                fill = SolidColor(Color.Black),
+                pathFillType = PathFillType.NonZero
+            ) {
+                moveTo(12f, 2f)
+                lineTo(15f, 9f)
+                lineTo(22f, 9f)
+                lineTo(17f, 14f)
+                lineTo(19f, 22f)
+                lineTo(12f, 18f)
+                lineTo(5f, 22f)
+                lineTo(7f, 14f)
+                lineTo(2f, 9f)
+                lineTo(9f, 9f)
+                close()
+            }
+
+        }.build()
+    }
+
+
+val NotBookmarkedIcon: ImageVector
+    get() {
+        return ImageVector.Builder(
+            name = "NotBookmarked",
+            defaultWidth = 24.dp,
+            defaultHeight = 24.dp,
+            viewportWidth = 24f,
+            viewportHeight = 24f
+        ).apply {
+
+            path(
+                fill = SolidColor(Color.Transparent),
+                stroke = SolidColor(Color.Black),
+                strokeLineWidth = 2f,
+                pathFillType = PathFillType.NonZero
+            ) {
+                moveTo(12f, 2f)
+                lineTo(15f, 9f)
+                lineTo(22f, 9f)
+                lineTo(17f, 14f)
+                lineTo(19f, 22f)
+                lineTo(12f, 18f)
+                lineTo(5f, 22f)
+                lineTo(7f, 14f)
+                lineTo(2f, 9f)
+                lineTo(9f, 9f)
+                close()
+            }
+
+        }.build()
+    }

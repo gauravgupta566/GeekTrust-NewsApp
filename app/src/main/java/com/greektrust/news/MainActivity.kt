@@ -46,71 +46,15 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
-            var appBarState by remember { mutableStateOf<AppBarState>(AppBarState.Hidden) }
-
 
             NewsAppGreekTrustTheme {
-                Scaffold(
-                    topBar = {
-                        when (val state = appBarState) {
-                            is AppBarState.Hidden -> {
+                Surface(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .systemBarsPadding()
+                ) {
+                    NewsNavHost()
 
-                            }
-
-                            is AppBarState.NewsFeed -> {
-                                TopAppBar(
-                                    title = { Text("News Feed") },
-                                    actions = {
-                                        IconButton(onClick = { state.onSearchClick }) {
-                                            Icon(Icons.Default.Search, null)
-                                        }
-                                    })
-                            }
-
-                            is AppBarState.Search -> {
-                                TopAppBar(title = { Text(state.title) })
-
-                            }
-
-                            is AppBarState.Bookmark -> {
-                                TopAppBar(title = { Text(state.title) })
-                            }
-
-                            is AppBarState.Details -> {
-                                TopAppBar(
-                                    title = { Text(state.title) },
-                                    navigationIcon = {
-                                        IconButton(onClick = state.onBack) {
-                                            Icon(Icons.Default.ArrowBack, null)
-                                        }
-                                    },
-                                    actions = {
-                                        IconButton(onClick = state.onShare) {
-                                            Icon(Icons.Default.Share, null)
-                                        }
-                                        IconButton(onClick = state.onBookmark) {
-                                            Icon(Icons.Default.Star, null)
-                                        }
-                                        IconButton(onClick = state.onOpenInBrowser) {
-                                            Icon(OpenInBrowserIcon, null)
-                                        }
-                                    }
-                                )
-                            }
-
-                        }
-                    }
-
-                ) { paddingValues ->
-                    NewsNavHost(
-                        Modifier
-                            .padding(paddingValues)
-                            .systemBarsPadding(),
-
-                        appBarState = { newState ->
-                            appBarState = newState
-                        }
-                    )
                 }
             }
         }

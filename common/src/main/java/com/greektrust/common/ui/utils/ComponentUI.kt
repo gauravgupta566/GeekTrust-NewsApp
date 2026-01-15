@@ -3,6 +3,7 @@ package com.greektrust.common.ui.utils
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.widget.Toast
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -53,5 +54,7 @@ fun openCustomTabSafe(
         )
     }
 }
+
+
 
 

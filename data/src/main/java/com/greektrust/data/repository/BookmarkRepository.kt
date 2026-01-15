@@ -10,8 +10,8 @@ interface BookmarkRepository {
     fun getBookmarkByUrl(url: String): Flow<Article?>
 
 
-    suspend fun insertBookmark(article: Article)
+    suspend fun insertBookmark(article: Article):Long
 
-    suspend fun deleteBookmark(url: String)
+    suspend fun deleteBookmark(url: String):Int
 
 }

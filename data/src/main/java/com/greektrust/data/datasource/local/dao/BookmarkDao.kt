@@ -19,11 +19,11 @@ interface BookmarkDao {
 
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(article: BookmarkedArticleEntity)
+    suspend fun insert(article: BookmarkedArticleEntity) :Long
 
     @Delete
-    suspend fun delete(article: BookmarkedArticleEntity)
+    suspend fun delete(article: BookmarkedArticleEntity): Int
 
     @Query("DELETE FROM bookmarked_articles WHERE url = :url")
-    suspend fun deleteByUrl(url: String)
+    suspend fun deleteByUrl(url: String) :Int
 }

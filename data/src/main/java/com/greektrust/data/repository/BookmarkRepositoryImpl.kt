@@ -31,12 +31,12 @@ class BookmarkRepositoryImpl @Inject constructor(
             }
     }
 
-    override suspend fun insertBookmark(article: Article) {
-        bookmarkDao.insert(article.toBookmarkedEntity())
+    override suspend fun insertBookmark(article: Article):Long {
+       return bookmarkDao.insert(article.toBookmarkedEntity())
     }
 
-    override suspend fun deleteBookmark(url: String) {
-        bookmarkDao.deleteByUrl(url)
+    override suspend fun deleteBookmark(url: String):Int {
+      return  bookmarkDao.deleteByUrl(url)
     }
 
 }

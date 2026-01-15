@@ -2,11 +2,16 @@ package com.greektrust.presentation.home
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -19,12 +24,14 @@ import com.greektrust.data.model.dto.Article
 import com.greektrust.presentation.bookmark.BookMarkScreen
 import com.greektrust.presentation.bookmark.BookMarkViewModel
 import com.greektrust.presentation.feed.NewsFeedScreen
+import com.greektrust.presentation.search.SearchNavGraph
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    appBarState: (AppBarState) -> Unit,
-    onArticleClick: (String) -> Unit,
-    onSearchClick : (String) -> Unit
+    onArticleClick: (Article) -> Unit,
+    onSearchClick: () -> Unit,
+    bookMarkViewModel : BookMarkViewModel
 ) {
     val navController = rememberNavController()
     val items = listOf(
@@ -32,7 +39,38 @@ fun HomeScreen(
         BottomNavItem.Bookmark
     )
 
+    val currentRoute =
+        navController.currentBackStackEntryAsState()
+            .value?.destination?.route
+
     Scaffold(
+        topBar = {
+            when (currentRoute) {
+                BottomNavItem.News.route -> {
+                    TopAppBar(
+                        title = { Text("News Feed") },
+                        actions = {
+                            IconButton(
+                                onClick = {
+                                    onSearchClick()
+                                }
+                            ) {
+                                Icon(Icons.Default.Search, contentDescription = "Search")
+                            }
+                        }
+                    )
+                }
+
+                BottomNavItem.Bookmark.route -> {
+                    TopAppBar(
+                        title = { Text("Bookmarks") }
+                    )
+                }
+
+
+            }
+        },
+
         bottomBar = {
             NavigationBar {
                 val currentRoute = navController
@@ -66,9 +104,8 @@ fun HomeScreen(
         BottomNavHost(
             navController = navController,
             padding = padding,
-            appBarState = appBarState,
             onArticleClick = onArticleClick,
-            onSearchClick = onSearchClick,
+            bookMarkViewModel = bookMarkViewModel
         )
     }
 }
@@ -78,9 +115,8 @@ fun HomeScreen(
 fun BottomNavHost(
     navController: NavHostController,
     padding: PaddingValues,
-    appBarState: (AppBarState) -> Unit,
-    onArticleClick: (String) -> Unit,
-    onSearchClick: (String) -> Unit,
+    onArticleClick: (Article) -> Unit,
+    bookMarkViewModel: BookMarkViewModel
 ) {
     NavHost(
         navController = navController,
@@ -90,16 +126,16 @@ fun BottomNavHost(
 
         composable(BottomNavItem.News.route) {
             NewsFeedScreen(
-                appBarState = appBarState,
-                onArticleClick = onArticleClick,
-                onSearchClick = onSearchClick
+                onArticleClick = onArticleClick
+
             )
         }
 
         composable(BottomNavItem.Bookmark.route) {
             BookMarkScreen(
-                appBarState = appBarState,
                 onArticleClick = onArticleClick,
+                bookmarkViewModel = bookMarkViewModel
+
             )
         }
     }

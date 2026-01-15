@@ -22,7 +22,9 @@ object DatabaseModule {
             context,
             NewsDatabase::class.java,
             "news_db"
-        ).build()
+        )
+            //.addMigrations(MIGRATION_1_2)
+            .build()
 
     @Provides
     fun provideBookmarkDao(db: NewsDatabase): BookmarkDao =

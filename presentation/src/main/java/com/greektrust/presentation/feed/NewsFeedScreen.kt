@@ -32,24 +32,18 @@ import com.greektrust.common.ui.utils.formatDate
 import com.greektrust.core.network.APIError
 import com.greektrust.core.network.APIResult
 import com.greektrust.data.model.dto.Article
+import com.greektrust.presentation.bookmark.BookMarkViewModel
 import com.greektrust.presentation.search.SearchNavGraph
 
 @Composable
 fun NewsFeedScreen(
-    appBarState: (AppBarState) -> Unit,
-    onArticleClick: (String) -> Unit,
-    onSearchClick: (String) -> Unit,
+    onArticleClick: (Article) -> Unit,
     newsFeedViewModel: NewsFeedViewModel = hiltViewModel()
 ) {
 
     val result = newsFeedViewModel.newFeed.collectAsState()
 
     LaunchedEffect(Unit) {
-        appBarState(AppBarState.NewsFeed(title = "News Feed", onSearchClick = {
-            onSearchClick(
-                SearchNavGraph.Search.route
-            )
-        }))
         newsFeedViewModel.getNewsFeed()
     }
 
@@ -76,10 +70,10 @@ fun NewsFeedScreen(
 }
 
 @Composable
-fun NewsFeedContent(articles: List<Article>, onArticleClick: (String) -> Unit) {
+fun NewsFeedContent(articles: List<Article>, onArticleClick: (Article) -> Unit) {
     LazyColumn(modifier = Modifier.fillMaxSize()) {
         items(items = articles, key = { articles -> articles.url }) { feed ->
-            NewsItem(feed, onClick = { onArticleClick(feed.url) })
+            NewsItem(feed, onClick = { onArticleClick(feed) })
         }
     }
 

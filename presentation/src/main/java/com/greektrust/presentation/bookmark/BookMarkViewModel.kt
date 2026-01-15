@@ -5,56 +5,66 @@ import androidx.lifecycle.viewModelScope
 import com.greektrust.data.model.dto.Article
 import com.greektrust.data.repository.BookmarkRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class BookMarkViewModel @Inject constructor (private val bookmarkRepository: BookmarkRepository) : ViewModel() {
-
-    private val _bookmarks = MutableStateFlow<List<Article>>(emptyList())
-    val bookmarks: StateFlow<List<Article>> = _bookmarks
+class BookMarkViewModel @Inject constructor(private val bookmarkRepository: BookmarkRepository) :
+    ViewModel() {
 
 
-    private val _bookmarkByUrl = MutableStateFlow<Article?>(null)
-    val bookmarkByUrl: StateFlow<Article?> = _bookmarkByUrl
+    private val _bookmarkEvent = MutableSharedFlow<BookmarkEvent>(
+        replay = 0,
+        extraBufferCapacity = 1
+    )
+    val bookmarkEvent: SharedFlow<BookmarkEvent> = _bookmarkEvent
 
-    init {
-        observeBookmarks()
+
+    val bookmarks: StateFlow<List<Article>> =
+        bookmarkRepository
+            .getBookmarks()
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5_000),
+                initialValue = emptyList()
+            )
+
+    fun isBookmarked(url: String): StateFlow<Boolean> =
+        bookmarkRepository
+            .getBookmarkByUrl(url)
+            .map { it != null }
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5_000),
+                initialValue = false
+            )
+
+
+    fun toggleBookmark(article: Article) {
+        viewModelScope.launch {
+            val existing =
+                bookmarkRepository
+                    .getBookmarkByUrl(article.url)
+                    .first()
+
+            if (existing == null) {
+                bookmarkRepository.insertBookmark(article)
+                _bookmarkEvent.emit(BookmarkEvent.Added)
+
+            } else {
+                bookmarkRepository.deleteBookmark(article.url)
+                _bookmarkEvent.emit(BookmarkEvent.Removed)
+            }
+
+        }
     }
 
-
-    private fun observeBookmarks() {
-        viewModelScope.launch {
-            bookmarkRepository
-                .getBookmarks()
-                .collect { entities ->
-                    _bookmarks.value = entities }
-                }
-        }
-
-
-    fun observeBookmarkByUrl(url: String) {
-        viewModelScope.launch {
-            bookmarkRepository
-                .getBookmarkByUrl(url)
-                .collect { article ->
-                    _bookmarkByUrl.value = article
-                }
-        }
-    }
-
-
-    fun addBookmark(article: Article) {
-        viewModelScope.launch {
-            bookmarkRepository.insertBookmark(article)
-        }
-    }
-
-    fun removeBookmark(url: String) {
-        viewModelScope.launch {
-            bookmarkRepository.deleteBookmark(url)
-        }
-    }
 }

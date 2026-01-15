@@ -3,6 +3,7 @@ package com.greektrust.core.network.di
 import com.greektrust.core.network.NetworkConstants
 import com.greektrust.core.network.interceptor.HeaderInterceptor
 import com.greektrust.core.network.interceptor.LoggingInterceptor
+import com.greektrust.core.network.interceptor.RetryInterceptor
 import com.greektrust.core.network.retrofit.RetrofitProvider
 import com.squareup.moshi.Moshi
 import dagger.Module
@@ -36,6 +37,7 @@ object NetworkModule {
             .connectTimeout(NetworkConstants.TIMEOUT, TimeUnit.SECONDS)
             .addInterceptor(LoggingInterceptor())
             .addInterceptor(HeaderInterceptor(API_KEY))
+            .addInterceptor(RetryInterceptor())
             .build()
 
 
