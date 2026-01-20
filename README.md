@@ -2,7 +2,7 @@
 
 
 ## 🎥 App Demo
-[Click to play demo](./app/src/main/assets/demo_video.mp4)
+https://github.com/user-attachments/assets/1f5e78f5-563c-49e6-be58-67bb76554ff8
 
 ## Architecture
 MVVM + Clean Architecture
